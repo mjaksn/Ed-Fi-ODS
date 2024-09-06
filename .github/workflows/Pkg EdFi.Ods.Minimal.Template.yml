@@ -37,10 +37,24 @@ jobs:
       calling_branch: ${{ github.head_ref || github.ref_name }}
 
   build:
-	runs-on: ubuntu-latest
-	
+    runs-on: ubuntu-latest
     if: ${{ always() }}
     needs: FindStandardAndExtensionVersions
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        volumes:
+          - SQLServerDataVolume:/var/opt/mssql
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: ${{ env.DB_PASS }}
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "exit 0" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 3
     strategy:
       matrix:
         StandardVersion: ${{ fromJson(needs.FindStandardAndExtensionVersions.outputs.StandardVersions) }}
