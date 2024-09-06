@@ -37,7 +37,6 @@ jobs:
       calling_branch: ${{ github.head_ref || github.ref_name }}
 
   build:
-	  
 	runs-on: ubuntu-latest
 	
     if: ${{ always() }}
