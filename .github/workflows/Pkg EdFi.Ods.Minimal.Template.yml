@@ -37,9 +37,10 @@ jobs:
       calling_branch: ${{ github.head_ref || github.ref_name }}
 
   build:
+	runs-on: ubuntu-latest
     if: ${{ always() }}
     needs: FindStandardAndExtensionVersions
-    runs-on: ubuntu-latest
+    
 	
 	# services:
     #   mssql:
