@@ -41,21 +41,21 @@ jobs:
     needs: FindStandardAndExtensionVersions
     runs-on: ubuntu-latest
 	
-	services:
-      mssql:
-        image: mcr.microsoft.com/mssql/server:2019-latest
-		volumes:
-          - SQLServerDataVolume:/var/opt/mssql
-        env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: ${{ env.DB_PASS }}
-        ports:
-          - 1433:1433
-        options: >-
-          --health-cmd "exit 0" 
-          --health-interval 10s 
-          --health-timeout 5s 
-          --health-retries 3
+	# services:
+    #   mssql:
+    #     image: mcr.microsoft.com/mssql/server:2019-latest
+	# 	volumes:
+    #       - SQLServerDataVolume:/var/opt/mssql
+    #     env:
+    #       ACCEPT_EULA: Y
+    #       SA_PASSWORD: ${{ env.DB_PASS }}
+    #     ports:
+    #       - 1433:1433
+    #     options: >-
+    #       --health-cmd "exit 0" 
+    #       --health-interval 10s 
+    #       --health-timeout 5s 
+    #       --health-retries 3
 		  
     strategy:
       matrix:
