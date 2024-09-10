@@ -143,7 +143,7 @@ jobs:
         $ErrorActionPreference = 'Stop'
         [Environment]::SetEnvironmentVariable('msbuild_buildConfiguration', '${{ env.CONFIGURATION }}')
         Import-Module -Force -Scope Global "$env:GITHUB_WORKSPACE/Ed-Fi-ODS-Implementation/DatabaseTemplate/Modules/create-minimal-template.psm1"
-        Initialize-MinimalTemplate -samplePath './Ed-Fi-Data-Standard/Descriptors' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -LocalDbBackupDirectory ${{ github.workspace }}/MssqlBackupVolume -DbServerBackupDirectory ${{env.SQL_CONTAINER_BACKUP_DIR}}
+        Initialize-MinimalTemplate -samplePath './Ed-Fi-Data-Standard/Descriptors' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -LocalDbBackupDirectory ${{ github.workspace }}/MssqlBackupVolume -DbServerBackupDirectory /DatabaseBackups
       shell: pwsh
     - name: Set permissions for database backup file
       working-directory: ./

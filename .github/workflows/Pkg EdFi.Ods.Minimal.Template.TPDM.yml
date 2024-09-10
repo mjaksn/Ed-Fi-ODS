@@ -151,7 +151,7 @@ jobs:
         $ErrorActionPreference = 'Stop'
         [Environment]::SetEnvironmentVariable('msbuild_buildConfiguration', '${{ env.CONFIGURATION }}')        
         Import-Module -Force -Scope Global "$env:GITHUB_WORKSPACE/Ed-Fi-ODS-Implementation/DatabaseTemplate/Modules/create-tpdm-minimal-template.psm1"
-        Initialize-TPDMMinimalTemplate -ExtensionVersion ${{ matrix.ExtensionVersion }} -StandardVersion ${{ matrix.StandardVersion }} -LocalDbBackupDirectory ${{ github.workspace }}/MssqlBackupVolume -DbServerBackupDirectory ${{env.SQL_CONTAINER_BACKUP_DIR}}
+        Initialize-TPDMMinimalTemplate -ExtensionVersion ${{ matrix.ExtensionVersion }} -StandardVersion ${{ matrix.StandardVersion }} -LocalDbBackupDirectory ${{ github.workspace }}/MssqlBackupVolume -DbServerBackupDirectory /DatabaseBackups
       shell: pwsh
     - name: Set permissions for database backup file
       working-directory: ./
