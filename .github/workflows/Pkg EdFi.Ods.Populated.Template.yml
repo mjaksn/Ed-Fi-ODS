@@ -45,7 +45,7 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2019-latest
         volumes:
-          - /SQLServerMount:/DatabaseBackup
+          - /MssqlBackupVolume:/DbBackups
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: ${{ env.DB_PASS }}
@@ -72,7 +72,7 @@ jobs:
         echo "::error::Missing Azure Token"
         exit 1 
     - name: Set permissions for database server container backup directory
-      run: docker exec --user root mssql chmod 777 /DatabaseBackup
+      run: docker exec --user root mssql chmod 777 /DbBackups
       shell: bash
     - name: Checkout Ed-Fi-ODS
       uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
@@ -143,7 +143,7 @@ jobs:
         $ErrorActionPreference = 'Stop'
         [Environment]::SetEnvironmentVariable('msbuild_buildConfiguration', '${{ env.CONFIGURATION }}')
         Import-Module -Force -Scope Global "$env:GITHUB_WORKSPACE/Ed-Fi-ODS-Implementation/DatabaseTemplate/Modules/create-populated-template.psm1"
-        Initialize-PopulatedTemplate -samplePath './Ed-Fi-Data-Standard/' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -LocalBackupMount /SQLServerMount -DbServerBackupDirectory /DatabaseBackup
+        Initialize-PopulatedTemplate -samplePath './Ed-Fi-Data-Standard/' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -localDbBackupDirectory /MssqlBackupVolume -dbServerBackupDirectory /DbBackups
       shell: pwsh
     - name: Set permissions for database backup file
       working-directory: ./
