@@ -46,7 +46,7 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2019-latest
         volumes:
-          - /MssqlBackupVolume:/DbBackups
+          - ${{ env.SQL_BACKUP_VOLUME }}:${{ env.SQL_CONTAINER_BACKUP_DIR }}
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: ${{ env.DB_PASS }}
