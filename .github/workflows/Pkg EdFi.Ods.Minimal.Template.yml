@@ -29,8 +29,6 @@ env:
   REF_NAME:  ${{ GITHUB.REF_NAME }}
   REPOSITORY_OWNER: ${{ GITHUB.REPOSITORY_OWNER }}
   DB_PASS: temporaryDbP@ssw0rd!
-  SQL_BACKUP_VOLUME: "/MssqlBackupVolume"
-  SQL_CONTAINER_BACKUP_DIR: "/DatabaseBackups"
 
 jobs:
 
@@ -47,7 +45,7 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2019-latest
         volumes:
-          - ${{ env.SQL_BACKUP_VOLUME }}:${{ env.SQL_CONTAINER_BACKUP_DIR }}
+          - ${{ github.workspace }}/MssqlBackupVolume:/DatabaseBackups
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: ${{ env.DB_PASS }}
@@ -74,7 +72,7 @@ jobs:
         echo "::error::Missing Azure Token"
         exit 1 
     - name: Set permissions for database server container backup directory
-      run: docker exec --user root mssql chmod 777 ${{env.SQL_CONTAINER_BACKUP_DIR}}
+      run: docker exec --user root mssql chmod 777 ${{ github.workspace }}/MssqlBackupVolume
       shell: bash
     - name: Checkout Ed-Fi-ODS
       uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
@@ -145,7 +143,7 @@ jobs:
         $ErrorActionPreference = 'Stop'
         [Environment]::SetEnvironmentVariable('msbuild_buildConfiguration', '${{ env.CONFIGURATION }}')
         Import-Module -Force -Scope Global "$env:GITHUB_WORKSPACE/Ed-Fi-ODS-Implementation/DatabaseTemplate/Modules/create-minimal-template.psm1"
-        Initialize-MinimalTemplate -samplePath './Ed-Fi-Data-Standard/Descriptors' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -LocalDbBackupDirectory ${{env.SQL_BACKUP_VOLUME}} -DbServerBackupDirectory ${{env.SQL_CONTAINER_BACKUP_DIR}}
+        Initialize-MinimalTemplate -samplePath './Ed-Fi-Data-Standard/Descriptors' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -LocalDbBackupDirectory ${{ github.workspace }}/MssqlBackupVolume -DbServerBackupDirectory ${{env.SQL_CONTAINER_BACKUP_DIR}}
       shell: pwsh
     - name: Set permissions for database backup file
       working-directory: ./
