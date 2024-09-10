@@ -70,12 +70,12 @@ jobs:
     - name: Checkout Ed-Fi-ODS
       uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       with:
-          repository: Ed-Fi-Alliance-OSS/Ed-Fi-ODS
+          repository: mjaksn/Ed-Fi-ODS
           path: Ed-Fi-ODS/
     - name: Checkout Ed-Fi-ODS-Implementation
       uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       with:
-          repository: Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation
+          repository: mjaksn/Ed-Fi-ODS-Implementation
           path: Ed-Fi-ODS-Implementation/
     - name: Set EdFi-Standard Reference
       working-directory: ./Ed-Fi-ODS/
@@ -87,7 +87,7 @@ jobs:
     - name: Checkout Ed-Fi-Data-Standard
       uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       with:
-          repository: Ed-Fi-Alliance-OSS/Ed-Fi-Data-Standard
+          repository: mjaksn/Ed-Fi-Data-Standard
           path: Ed-Fi-Data-Standard/
           ref: ${{ env.EDFI_STANDARD_REFERENCE }}
     - name: Set EdFi-Tpdm Reference
@@ -100,7 +100,7 @@ jobs:
     - name: Checkout Ed-Fi-TPDM-Artifacts
       uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       with:
-          repository: Ed-Fi-Alliance-OSS/Ed-Fi-TPDM-Artifacts
+          repository: mjaksn/Ed-Fi-TPDM-Artifacts
           path: Ed-Fi-TPDM-Artifacts/
           ref: ${{ env.EDFI_TPDM_REFERENCE }}
     - name: Is pull request branch exists in Ed-Fi-ODS-Implementation
