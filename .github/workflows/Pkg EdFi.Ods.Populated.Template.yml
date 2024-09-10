@@ -29,6 +29,8 @@ env:
   REF_NAME:  ${{ GITHUB.REF_NAME }}
   REPOSITORY_OWNER: ${{ GITHUB.REPOSITORY_OWNER }}
   DB_PASS: temporaryDbP@ssw0rd!
+  SQL_BACKUP_VOLUME: "/MssqlBackupVolume"
+  SQL_CONTAINER_BACKUP_DIR: "/DatabaseBackups"
 
 jobs:
 
@@ -143,7 +145,7 @@ jobs:
         $ErrorActionPreference = 'Stop'
         [Environment]::SetEnvironmentVariable('msbuild_buildConfiguration', '${{ env.CONFIGURATION }}')
         Import-Module -Force -Scope Global "$env:GITHUB_WORKSPACE/Ed-Fi-ODS-Implementation/DatabaseTemplate/Modules/create-populated-template.psm1"
-        Initialize-PopulatedTemplate -samplePath './Ed-Fi-Data-Standard/' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -LocalDbBackupDirectory /MssqlBackupVolume -DbServerBackupDirectory /DbBackups
+        Initialize-PopulatedTemplate -samplePath './Ed-Fi-Data-Standard/' -noExtensions -StandardVersion ${{ matrix.StandardVersion }}  -ExtensionVersion ${{ matrix.ExtensionVersion }} -LocalDbBackupDirectory ${{env.SQL_BACKUP_VOLUME}} -DbServerBackupDirectory ${{env.SQL_CONTAINER_BACKUP_DIR}}
       shell: pwsh
     - name: Set permissions for database backup file
       working-directory: ./
