@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using EdFi.Ods.Common.Database.Querying;
 using EdFi.Ods.Common.Models.Domain;
+using EdFi.Ods.Common.Models.Queries;
 
 namespace EdFi.Ods.Api.Controllers.Partitions.Controllers;
 
@@ -20,11 +21,13 @@ public interface IPartitionsQueryBuilderProvider
     /// <param name="numberOfPartitions"></param>
     /// <param name="aggregateRootEntity"></param>
     /// <param name="specification"></param>
+    /// <param name="queryParameters"></param>
     /// <param name="additionalParameters"></param>
     /// <returns></returns>
     QueryBuilder GetQueryBuilder(
         int numberOfPartitions,
         Entity aggregateRootEntity,
         AggregateRootWithCompositeKey specification,
+        QueryParameters queryParameters,
         IDictionary<string, string> additionalParameters);
 }
