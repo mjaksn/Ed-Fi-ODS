@@ -352,6 +352,14 @@ namespace EdFi.Ods.Api.Container.Modules
                         }))
                 .As<IPersonUsiResolver>()
                 .SingleInstance();
+
+            builder.RegisterType<ContextualPersonUsisResolver>()
+                .As<IContextualPersonUsisResolver>()
+                .SingleInstance();
+
+            builder.RegisterType<ContextualPersonUniqueIdsResolver>()
+                .As<IContextualPersonUniqueIdsResolver>()
+                .SingleInstance();
         }
     }
 }
